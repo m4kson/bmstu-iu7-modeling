@@ -1,10 +1,13 @@
+import koshi
+
 def print_menu():
-    print("====menu====")
-    print("1. task 1")
-    print("2. task 2")
-    print("3. task 3")
-    print("4. info")
-    print("0. exit")
+    print("======menu======")
+    print("| 1. task 1    |")
+    print("| 2. task 2    |")
+    print("| 3. task 3    |")
+    print("| 4. info      |")
+    print("| 0. exit      |")
+    print("----------------")
 
 
 def menu():
@@ -18,8 +21,8 @@ def menu():
         elif (option == 1):
             pass
         elif (option == 2):
-            pass
+            koshi.task2()
         elif (option == 3):
-            pass
+            koshi.task3()
         elif (option == 4):
             pass
