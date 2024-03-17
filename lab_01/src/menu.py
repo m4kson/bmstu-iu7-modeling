@@ -19,7 +19,7 @@ def menu():
         if (option == 0):
             break
         elif (option == 1):
-            pass
+            koshi.task1()
         elif (option == 2):
             koshi.task2()
         elif (option == 3):

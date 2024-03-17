@@ -17,6 +17,15 @@ def f_3(x, u):
 def analytical_solution_2(u):
     return math.exp(u**2) - (u**2 + 1) / 2
 
+def picar_approx_1_1(x):
+    return 1 + 2*x
+
+def picar_approx_1_2(x):
+    return picar_approx_1_1(x) - 0.4*(x**2 / 2) - x**2 / 2 - 0.1 * (x**3 / 6)
+
+def picar_approx_1_3(x):
+    return picar_approx_1_1(x) - 7 * x**2 / 10 - 47 * x**4 / 1500 - x**6 / 120000 - 77 * x**3 / 300 - 7 * x**5 / 10000
+
 def picar_approx_2_1(u):
     return 0.5 + u**2 / 2 + u**4 / 4
 
@@ -159,7 +168,7 @@ def task1():
                                                                                     picar_approx_1_1(x_start),
                                                                                     picar_approx_1_2(x_start),
                                                                                     picar_approx_1_3(x_start),
-                                                                                    picar_approx_1_4(x_start)))
+                                                                                    0))
 
         print(
             "-------------------------------------------------------------------------------------------")
@@ -212,8 +221,8 @@ def task3():
     x_start = 0
     y_start = 0
     h = 1e-6
-    x_end = find_xmax_2(f_3, x_start, y_start, h)
-    #x_end = 1
+    #x_end = find_xmax_2(f_3, x_start, y_start, h)
+    x_end = 2
 
     n = math.ceil(abs(x_end - x_start) / h) + 1
     output_step = int(n / 10)
