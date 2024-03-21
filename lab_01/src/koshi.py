@@ -90,6 +90,7 @@ def euler_method_for_system(f, x0, y0, v0, h, n):
         v_values.append(v_new)
     return u_values
 
+
 def find_xmax(f, x0, y0, h):
     x_values = [x0]
     y_values = [y0]
@@ -108,9 +109,11 @@ def find_xmax(f, x0, y0, h):
             x_values_with_half_step.append(x_new_with_half_step)
             y_values_with_half_step.append(y_new_with_half_step)
 
-        if abs((y_new - y_new_with_half_step)) > eps:
+        if abs((y_new - y_new_with_half_step) / y_new_with_half_step) < eps:
             print("values: {}, {}".format(y_new, y_new_with_half_step))
-            return x_values_with_half_step[-2]
+
+        else:
+            return x_values_with_half_step[-1]
 
 def find_xmax_2(f, x0, y0, h):
     x_values = [x0]
@@ -132,7 +135,7 @@ def task1():
     x_start = 0.5
     u_start = 1
     v_start = 2
-    x_end = 1
+    x_end = 1.25
     h = 1e-6
 
     n = math.ceil(abs(x_end - x_start) / h) + 1
@@ -141,34 +144,33 @@ def task1():
     euler_ans = euler_method_for_system(f_1, x_start, u_start, v_start, h, n)
 
     print(
-        "-----------------------------------------------------------------------------------------------------------")
+        "--------------------------------------------------------------------------------------------")
     print(
-        "|                                           Задание №1: таблица                                           |")
+        "|                                           Задание №1: таблица                           |")
     print(
-        "-----------------------------------------------------------------------------------------------------------")
+        "-------------------------------------------------------------------------------------------")
     print(
-        "|         |                                          Метод                                                |")
+        "|         |                                          Метод                                |")
     print(
-        "|         |------------------------------------------------------------------------------------------------")
+        "|         |--------------------------------------------------------------------------------")
     print(
-        "|         |               |               |                          Метод Пикара                         |")
+        "|         |               |               |                   Метод Пикара                |")
     print(
-        "|         |               |               |---------------------------------------------------------------|")
+        "|         |               |               |-----------------------------------------------|")
     print(
-        "|    x    |  Разложение   |     Эйлера    |               |               |               |               |")
+        "|    x    |  Разложение   |     Эйлера    |               |               |               |")
     print(
-        "|         |               |               |   1-е прибл.  |   2-е прибл.  |   3-е прибл.  |   4-е прибл.  |")
+        "|         |               |               |   1-е прибл.  |   2-е прибл.  |   3-е прибл.  |")
     print(
-        "-----------------------------------------------------------------------------------------------------------")
+        "-------------------------------------------------------------------------------------------")
 
     for i in range(0, n, output_step):
-        print("|{:^9.2f}|{:^15.5f}|{:^15.5f}|{:^15.5f}|{:^15.5f}|{:^15.5f}|{:^15.5f}|".format(x_start,
+        print("|{:^9.2f}|{:^15.5f}|{:^15.5f}|{:^15.5f}|{:^15.5f}|{:^15.5f}|".format(x_start,
                                                                                     razlozhenie(x_start),
                                                                                     euler_ans[i],
                                                                                     picar_approx_1_1(x_start),
                                                                                     picar_approx_1_2(x_start),
-                                                                                    picar_approx_1_3(x_start),
-                                                                                    0))
+                                                                                    picar_approx_1_3(x_start)))
 
         print(
             "-------------------------------------------------------------------------------------------")
@@ -221,11 +223,12 @@ def task3():
     x_start = 0
     y_start = 0
     h = 1e-6
-    #x_end = find_xmax_2(f_3, x_start, y_start, h)
+    #x_end = find_xmax(f_3, x_start, y_start, h)
     x_end = 2
 
     n = math.ceil(abs(x_end - x_start) / h) + 1
-    output_step = int(n / 10)
+    output_step = math.ceil(n / 10)
+    #output_step = n
 
     euler_ans = euler_method(f_3, x_start, y_start, h, n)
 
