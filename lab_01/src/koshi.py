@@ -1,6 +1,6 @@
 import math
 
-eps = 10**-4
+eps = 1e-4
 
 def razlozhenie(x):
     return 2 * x + -0.4 * x**2 / 2 + -1.4 * x**3 / 6 + 0.08 * x**4 / 24 + 0.28 * x**5 / 120
@@ -97,7 +97,11 @@ def find_xmax(f, x0, y0, h):
     x_values_with_half_step = [x0]
     y_values_with_half_step = [y0]
 
-    while True:
+    flag = 1
+
+    c = 100
+    while c:
+        c-=1
         x_new = x_values[-1] + h
         y_new = y_values[-1] + h * f(x_values[-1], y_values[-1])
         x_values.append(x_new)
@@ -109,8 +113,16 @@ def find_xmax(f, x0, y0, h):
             x_values_with_half_step.append(x_new_with_half_step)
             y_values_with_half_step.append(y_new_with_half_step)
 
+        if flag:
+            flag = 0
+            continue
+
+        print("{}   {}".format(x_new, abs((y_values[-1] - y_values_with_half_step[-1]) / y_values_with_half_step[-1])))
+
+        #print("abs: {}".format(abs((y_values[-1] - y_values_with_half_step[-1]) / y_values_with_half_step[-1])))
         if abs((y_new - y_new_with_half_step) / y_new_with_half_step) < eps:
-            print("values: {}, {}".format(y_new, y_new_with_half_step))
+            pass
+            #print("values: {}, {}".format(y_new, y_new_with_half_step))
 
         else:
             return x_values_with_half_step[-1]
@@ -135,11 +147,11 @@ def task1():
     x_start = 0.5
     u_start = 1
     v_start = 2
-    x_end = 1.25
+    x_end = 1.18
     h = 1e-6
 
     n = math.ceil(abs(x_end - x_start) / h) + 1
-    output_step = int(n / 10)
+    output_step = int(n/200)
 
     euler_ans = euler_method_for_system(f_1, x_start, u_start, v_start, h, n)
 
@@ -227,8 +239,8 @@ def task3():
     x_end = 2
 
     n = math.ceil(abs(x_end - x_start) / h) + 1
-    output_step = math.ceil(n / 10)
-    #output_step = n
+    output_step = int(n / 200)
+
 
     euler_ans = euler_method(f_3, x_start, y_start, h, n)
 
